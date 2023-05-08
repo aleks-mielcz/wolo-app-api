@@ -1,0 +1,53 @@
+# Compiled class files
+**/*.class
+
+# Gradle build directory
+.gradle/
+
+# Cache directories
+**/.build-cache/
+**/bin/
+**/build/
+**/node_modules/
+
+# Dependencies
+**/.gradle/
+**/.m2/
+
+# IntelliJ IDEA files
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code files
+.vscode/
+.code-workspace
+
+# Eclipse files
+.settings/
+tmp/
+.classpath
+.project
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+
+# Spring Boot build files
+**/out/
+
+# Liquibase generated files
+**/databaseChangeLog.xml
+**/diff/
+
+# PostgreSQL data directory
+**/data/
+
+# REST Assured reports
+**/target/

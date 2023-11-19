@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Category</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .panel {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .categories-panel {
+            margin-right: 20px;
+        }
+
+        .add-category-panel {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div>
+<h1>Add Category</h1>
+
+<form th:object="${category}" th:action="@{/admin/categories/add}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required>
+
+    <!-- Dodaj inne pola w zależności od struktury Category -->
+
+    <button type="submit">Add</button>
+</form>
+
+<a th:href="@{'/admin/categories'}">Back to Categories</a>
+</div>
+</body>
+</html>

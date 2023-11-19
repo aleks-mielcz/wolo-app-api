@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .panel {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .categories-panel {
+      margin-right: 20px;
+    }
+
+    .add-category-panel {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+</div>
+<h1>Categories</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <!-- Dodaj inne kolumny w zależności od struktury Category -->
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="category : ${categories}">
+    <td th:text="${category.id}"></td>
+    <td th:text="${category.name}"></td>
+    <!-- Dodaj inne komórki w zależności od struktury Category -->
+    <td>
+      <a th:href="@{'/admin/categories/delete/' + ${category.id}}">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<a th:href="@{'/admin/categories/add'}">Add Category</a>
+</div>
+</body>
+</html>

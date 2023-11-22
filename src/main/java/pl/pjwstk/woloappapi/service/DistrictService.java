@@ -27,7 +27,7 @@ public class DistrictService {
         districtRepository.save(district);
     }
 
-    public void deleteCDistrict(Long id) {
+    public void deleteDistrict(Long id) {
         if (!districtRepository.existsById(id)) {
             throw new IllegalArgumentException("District with ID " + id + " does not exist");
         }

@@ -5,6 +5,8 @@ import org.mapstruct.factory.Mappers;
 import pl.pjwstk.woloappapi.model.dto.*;
 import pl.pjwstk.woloappapi.model.*;
 
+import java.util.List;
+
 @Mapper
 public interface GlobalMapper {
     GlobalMapper INSTANCE = Mappers.getMapper(GlobalMapper.class);
@@ -41,4 +43,18 @@ public interface GlobalMapper {
 
     UserDTO userToUserDTO(User user);
     User userDTOToUser(UserDTO userDTO);
+
+    List<CategoryDTO> categoryListToCategoryDTOList(List<Category> categories);
+
+    List<DistrictDTO> districtListToDistrictDTOList(List<District> districts);
+
+    List<EventDTO> eventListToEventDTOList(List<Event> events);
+
+    List<OrganisationDTO> organisationListToOrganisationDTOList(List<Organisation> organisations);
+
+    List<RoleDTO> roleListToRoleDTOList(List<Role> roles);
+
+    List<ShiftDTO> shiftListToShiftDTOList(List<Shift> shifts);
+
+    List<UserDTO> userListToUserDTOList(List<User> users);
 }

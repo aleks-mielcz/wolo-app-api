@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.pjwstk.woloappapi.model.District;
+import pl.pjwstk.woloappapi.GlobalMapper;
 import pl.pjwstk.woloappapi.model.Event;
+import pl.pjwstk.woloappapi.model.dto.EventDTO;
 import pl.pjwstk.woloappapi.service.EventService;
 
 import java.time.LocalDate;
@@ -17,44 +18,48 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
+    private final GlobalMapper globalMapper;
 
     @GetMapping()
-    public ResponseEntity<List<Event>> getEvents(){
+    public ResponseEntity<List<EventDTO>> getEvents() {
         List<Event> events = eventService.getAllEvents();
-        return new ResponseEntity<>(events, HttpStatus.OK);
+        List<EventDTO> eventDTOs = globalMapper.eventListToEventDTOList(events);
+        return new ResponseEntity<>(eventDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Event>> filterEvents(@RequestParam(value = "localization", required = false) String[] localizations,
-                                                    @RequestParam(value = "startDate", required = false) LocalDate startDate,
-                                                    @RequestParam(value = "endDate", required = false) LocalDate endDate,
-                                                    @RequestParam(value = "category", required = false) Long category,
-                                                    @RequestParam(value = "organizer", required = false) Long organizer,
-                                                    @RequestParam(value = "ageRestriction", required = false) Integer ageRestriction,
-
-                                                    @RequestParam(value = "verification", required = false) boolean isPeselVerificationRequired){
-
+    public ResponseEntity<List<EventDTO>> filterEvents(@RequestParam(value = "localization", required = false) String[] localizations,
+                                                       @RequestParam(value = "startDate", required = false) LocalDate startDate,
+                                                       @RequestParam(value = "endDate", required = false) LocalDate endDate,
+                                                       @RequestParam(value = "category", required = false) Long category,
+                                                       @RequestParam(value = "organizer", required = false) Long organizer,
+                                                       @RequestParam(value = "ageRestriction", required = false) Integer ageRestriction,
+                                                       @RequestParam(value = "verification", required = false) boolean isPeselVerificationRequired) {
 
         List<Event> filteredEvents = eventService.filterEvents(localizations, startDate, endDate, category, organizer,
                 ageRestriction, isPeselVerificationRequired);
-        return new ResponseEntity<>(filteredEvents, HttpStatus.OK);
+        List<EventDTO> filteredEventDTOs = globalMapper.eventListToEventDTOList(filteredEvents);
+        return new ResponseEntity<>(filteredEventDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable Long id){
+    public ResponseEntity<EventDTO> getEventById(@PathVariable Long id) {
         Event event = eventService.getEventById(id);
-        return new ResponseEntity<>(event, HttpStatus.OK);
+        EventDTO eventDTO = globalMapper.eventToEventDTO(event);
+        return new ResponseEntity<>(eventDTO, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> addEvent(@RequestBody Event event){
+    public ResponseEntity<HttpStatus> addEvent(@RequestBody EventDTO eventDTO) {
+        Event event = globalMapper.eventDTOToEvent(eventDTO);
         eventService.createEvent(event);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PutMapping("/edit/{id}")
-    public ResponseEntity<HttpStatus> editEvent(@PathVariable Long id, @RequestBody Event updatedEvent) {
+    public ResponseEntity<HttpStatus> editEvent(@PathVariable Long id, @RequestBody EventDTO updatedEventDTO) {
+        Event updatedEvent = globalMapper.eventDTOToEvent(updatedEventDTO);
         eventService.editEvent(id, updatedEvent);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
-

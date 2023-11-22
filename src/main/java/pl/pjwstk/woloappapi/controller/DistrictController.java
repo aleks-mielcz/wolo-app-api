@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.pjwstk.woloappapi.model.Category;
 import pl.pjwstk.woloappapi.model.District;
 import pl.pjwstk.woloappapi.service.DistrictService;
 
@@ -36,6 +37,11 @@ public class DistrictController {
     @PostMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteDistrict(@PathVariable Long id){
         districtService.deleteCDistrict(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<HttpStatus> editDistrict(@PathVariable Long id, @RequestBody District updatedDistrict) {
+        districtService.editDistrict(id, updatedDistrict);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

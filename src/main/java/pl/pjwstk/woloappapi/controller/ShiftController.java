@@ -38,9 +38,14 @@ public class ShiftController {
         shiftService.deleteShift(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/{shiftId}/registeredUsersCount")
-    public ResponseEntity<Integer> getRegisteredUsersCountForShift(@PathVariable Long shiftId) {
-        int registeredUsersCount = shiftService.getRegisteredUsersCountForShift(shiftId);
+    @GetMapping("/registeredUsersCount/{id}")
+    public ResponseEntity<Integer> getRegisteredUsersCountForShift(@PathVariable Long id) {
+        int registeredUsersCount = shiftService.getRegisteredUsersCountForShift(id);
         return ResponseEntity.ok(registeredUsersCount);
+    }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<HttpStatus> editShift(@PathVariable Long id, @RequestBody Shift updatedShift) {
+        shiftService.editShift(id, updatedShift);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

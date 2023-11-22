@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.pjwstk.woloappapi.model.District;
 import pl.pjwstk.woloappapi.model.Event;
 import pl.pjwstk.woloappapi.service.EventService;
 
@@ -50,6 +51,10 @@ public class EventController {
         eventService.createEvent(event);
             return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<HttpStatus> editEvent(@PathVariable Long id, @RequestBody Event updatedEvent) {
+        eventService.editEvent(id, updatedEvent);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 

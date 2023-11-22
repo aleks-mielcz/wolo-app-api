@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pjwstk.woloappapi.model.Role;
+import pl.pjwstk.woloappapi.model.Role;
 import pl.pjwstk.woloappapi.service.RoleService;
 
 import java.util.List;
@@ -36,6 +37,11 @@ public class RoleController {
     @PostMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteRole(@PathVariable Long id){
         roleService.deleteRole(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<HttpStatus> editRole(@PathVariable Long id, @RequestBody Role updatedRole) {
+        roleService.editRole(id, updatedRole);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -3,8 +3,9 @@ package pl.pjwstk.woloappapi.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.pjwstk.woloappapi.model.Role;
 import pl.pjwstk.woloappapi.model.User;
+import pl.pjwstk.woloappapi.model.Role;
+
 import pl.pjwstk.woloappapi.repository.RoleRepository;
 import pl.pjwstk.woloappapi.repository.UserRepository;
 import pl.pjwstk.woloappapi.utils.NotFoundException;
@@ -60,5 +61,26 @@ public class UserService {
         } else {
             return 0; // lub można zwrócić odpowiedni kod błędu
         }
+    }
+    public void editUser(Long id, User updatedUser) {
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundException("User with ID " + id + " does not exist");
+        }
+
+        User existingUser = userRepository.findById(id).orElseThrow();
+        existingUser.setFirstname(updatedUser.getFirstname());
+        existingUser.setLastname(updatedUser.getLastname());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+        existingUser.setRole(updatedUser.getRole());
+        existingUser.setPeselVerified(updatedUser.isPeselVerified());
+        existingUser.setAgreementSigned(updatedUser.isAgreementSigned());
+        existingUser.setAdult(updatedUser.isAdult());
+        existingUser.setOrganization(updatedUser.getOrganization());
+        existingUser.setShifts(updatedUser.getShifts());
+        existingUser.setPassword_hash(updatedUser.getPassword_hash());
+        existingUser.setSalt(updatedUser.getSalt());
+
+        userRepository.save(existingUser);
     }
 }

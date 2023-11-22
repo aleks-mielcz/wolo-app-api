@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.pjwstk.woloappapi.model.Event;
 import pl.pjwstk.woloappapi.model.Organisation;
+import pl.pjwstk.woloappapi.model.Event;
 import pl.pjwstk.woloappapi.service.OrganisationService;
 
 import java.util.List;
@@ -45,5 +45,10 @@ public class OrganisationController {
     public ResponseEntity<List<Event>> getEventsByOrganizer(@PathVariable Long id) {
         List<Event> eventsByOrganizer = organisationService.getEventsByOrganizer(id);
         return new ResponseEntity<>(eventsByOrganizer, HttpStatus.OK);
+    }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<HttpStatus> editOrganisation(@PathVariable Long id, @RequestBody Organisation updatedorganisation) {
+        organisationService.editOrganisation(id, updatedorganisation);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -38,9 +38,14 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/{userId}/shiftsCount")
-    public ResponseEntity<Integer> getShiftsCountForUser(@PathVariable Long userId) {
-        int shiftsCount = userService.getShiftsCountForUser(userId);
+    @GetMapping("/shiftsCount/{id}")
+    public ResponseEntity<Integer> getShiftsCountForUser(@PathVariable Long id) {
+        int shiftsCount = userService.getShiftsCountForUser(id);
         return ResponseEntity.ok(shiftsCount);
+    }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<HttpStatus> editUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        userService.editUser(id, updatedUser);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

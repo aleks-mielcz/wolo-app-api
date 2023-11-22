@@ -2,8 +2,8 @@ package pl.pjwstk.woloappapi.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.pjwstk.woloappapi.model.Event;
 import pl.pjwstk.woloappapi.model.Organisation;
+import pl.pjwstk.woloappapi.model.Event;
 import pl.pjwstk.woloappapi.repository.OrganisationRepository;
 import pl.pjwstk.woloappapi.utils.NotFoundException;
 
@@ -45,6 +45,22 @@ public class OrganisationService {
                 .map(Organisation::getEvents)
                 .orElseThrow(() -> new NotFoundException("Organizer id not found!"));
     }
+    public void editOrganisation(Long id, Organisation updatedOrganisation) {
+        if (!organisationRepository.existsById(id)) {
+            throw new NotFoundException("Organisation with ID " + id + " does not exist");
+        }
 
+        Organisation existingOrganisation = organisationRepository.findById(id).orElseThrow();
+        existingOrganisation.setName(updatedOrganisation.getName());
+        existingOrganisation.setDescription(updatedOrganisation.getDescription());
+        existingOrganisation.setEmail(updatedOrganisation.getEmail());
+        existingOrganisation.setPhoneNumber(updatedOrganisation.getPhoneNumber());
+        existingOrganisation.setAddress(updatedOrganisation.getAddress());
+        existingOrganisation.setApproved(updatedOrganisation.isApproved());
+        existingOrganisation.setModerator(updatedOrganisation.getModerator());
+        existingOrganisation.setLogoUrl(updatedOrganisation.getLogoUrl());
+
+        organisationRepository.save(existingOrganisation);
+    }
 
 }

@@ -3,6 +3,7 @@ package pl.pjwstk.woloappapi.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.pjwstk.woloappapi.model.Role;
+
 import pl.pjwstk.woloappapi.repository.RoleRepository;
 import pl.pjwstk.woloappapi.utils.NotFoundException;
 
@@ -25,13 +26,16 @@ public class RoleService {
         roleRepository.save(role);
     }
 
-    public Role updateRole(Role role) {
-        if (!roleRepository.existsById(role.getId())) {
-            throw new IllegalArgumentException("role with ID " + role.getId() + " does not exist");
+    public void editRole(Long id, Role updatedRole) {
+        if (!roleRepository.existsById(id)) {
+            throw new NotFoundException("Role with ID " + id + " does not exist");
         }
-        return roleRepository.save(role);
-    }
 
+        Role existingRole = roleRepository.findById(id).orElseThrow();
+        existingRole.setName(updatedRole.getName());
+
+        roleRepository.save(existingRole);
+    }
     public void deleteRole(Long id) {
         if (!roleRepository.existsById(id)) {
             throw new IllegalArgumentException("role with ID " + id + " does not exist");
